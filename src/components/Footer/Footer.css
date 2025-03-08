@@ -1,0 +1,22 @@
+.footer-container {
+    display: flex;
+    gap: 180px;
+    padding: 50px 20px 20px 20px;
+    
+    margin-left: 20px;
+
+}
+
+
+.footer-section h4 {
+    padding-bottom: 20px;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 20px;
+    text-decoration: none;
+}

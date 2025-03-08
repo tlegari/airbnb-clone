@@ -1,0 +1,19 @@
+.home {
+    width: 100%;
+}
+
+.black-section {
+    background-color: black;
+    color: white; 
+    padding-bottom: 50px; 
+}
+
+.white-section {
+    background-color: white;
+    color: black; 
+    padding-top: 50px; 
+}
+
+.grey-section {
+    background-color: rgb(233, 233, 233);
+}

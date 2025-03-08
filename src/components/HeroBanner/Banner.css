@@ -1,0 +1,61 @@
+body {
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+.banner {
+    margin: 27px;
+    height: 100vh;
+    position: relative;
+    background: url(https://onekindesign.com/wp-content/uploads/2016/10/Modern-Mountain-Home-01-1-Kindesign.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+}
+
+.banner_info {
+    color: white;
+    padding:  50px 40px;
+    position: absolute;
+    left: 50%;
+    bottom: 10%;
+    transform: translateX(-50%);
+    text-align: center; /* Centers text inside */
+
+}
+
+.banner_info > h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.banner_info > button {
+    background-color: #fff;
+    color: rgb(250, 80, 199);
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 500;
+    border-style: none;
+    padding: 16px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.banner_info > button:hover {
+    background-color: rgb(248, 223, 223);
+}
+
+
+.banner_search {
+    display: flex;
+    flex-direction: column;
+}
+
+.banner_searchButton {
+    background-color: white !important;
+    font-weight: 900 !important;
+    text-transform: inherit !important;
+    color: brown;
+}
