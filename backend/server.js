@@ -1,34 +1,33 @@
-import express from "express";
+import express from 'express'
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import accommodationRoutes from "./routes/accommodationRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import reservationRoutes from "./routes/reservationRoutes.js";
+import accommodationRoutes from "./routes/accommodationRoutes.js";
+
 
 dotenv.config();
 
-const app = express();
-app.use(express.json()); 
+const app = express(); // Initialize the express application
+app.use(express.json()); //Middleware to parse incoming JSON requests
 app.use(cors());
 
 
-console.log("MONGO_URI:", process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("MongoDB connected"))
+.catch(err => console.log(err));
 
-if (!process.env.MONGO_URI) {
-  console.error(" ERROR: MONGO_URI is not defined in .env file");
-  process.exit(1); 
-}
+app.use("/api", userRoutes);
+app.use("/api/accommodations", accommodationRoutes)
 
 
-mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log(" MongoDB Connected"))
-  .catch((err) => console.error(" MongoDB Connection Error:", err));
+app.get('/', (req, res) => {
+  res.send("Hello Tshego you server is now working") // I added this to test that the server is working through postman
+})
 
-app.use("/api/accommodations", accommodationRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/reservations", reservationRoutes);
-
+// Starting the server and listening on a specific port
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(` Server running on http://localhost:${PORT}`));

@@ -1,17 +1,15 @@
 import mongoose from "mongoose";
 
-const AccommodationSchema = new mongoose.Schema({
-  title: String,
-  location: String,
-  description: String,
-  price: Number,
-  bedrooms: Number,
-  bathrooms: Number,
-  guests: Number,
+const accommodationSchema = new mongoose.Schema({
+  city: String,
+  image: String,
   type: String,
-  amenities: [String],
-  images: [String],
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  guests: Number,
+  wifi: Boolean,
+  reviews: Number,
+  price: Number,
 });
 
-export default mongoose.model("Accommodation", AccommodationSchema);
+const Accommodation = mongoose.model("Accommodation", accommodationSchema);
+
+export default Accommodation;

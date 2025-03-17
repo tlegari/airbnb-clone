@@ -89,3 +89,24 @@
 .account_icon {
     color: lightgray;
 }
+
+.account-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .dropdown-select {
+    border: none;
+    background: white;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .dropdown-select:hover {
+    background: #f0f0f0;
+  }
+  

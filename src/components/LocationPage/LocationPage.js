@@ -1,62 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchListings } from "../../redux/slices/accommodationSlice";
 import SearchNavbar from "../TopHeader/SearchNavbar";
 import { Link } from "react-router-dom";
 import "./LocationPage.css";
 
-const locations = [
-  {
-    city: "New York",
-    image:
-      "https://images.unsplash.com/photo-1549323423-68d192fa0b9c",
-    type: "Apartment",
-    guests: 4,
-    wifi: true,
-    reviews: 120,
-    price: 150,
-  },
-  {
-    city: "London",
-    image:
-      "https://images.unsplash.com/photo-1564025037669-447dc9690915",
-    type: "Studio",
-    guests: 2,
-    wifi: true,
-    reviews: 95,
-    price: 120,
-  },
-  {
-    city: "Dubai",
-    image:
-      "https://images.unsplash.com/photo-1584974419724-b3a7f94d3a2e",
-    type: "Luxury Villa",
-    guests: 6,
-    wifi: true,
-    reviews: 210,
-    price: 300,
-  },
-  {
-    city: "Cape Town",
-    image:
-      "https://images.unsplash.com/photo-1570813591759-164d4a4dbe27",
-    type: "House",
-    guests: 5,
-    wifi: true,
-    reviews: 80,
-    price: 180,
-  },
-  {
-    city: "Paris",
-    image:
-      "https://images.unsplash.com/photo-1522091750242-647918d8c49b",
-    type: "Penthouse",
-    guests: 3,
-    wifi: true,
-    reviews: 150,
-    price: 250,
-  },
-];
-
 const LocationPage = () => {
+  const dispatch = useDispatch();
+  const { listings, loading } = useSelector((state) => state.accommodation);
+
+  useEffect(() => {
+    dispatch(fetchListings());
+  }, [dispatch]);
+
   return (
     <div>
       <div className="loc-nav">
@@ -72,21 +28,26 @@ const LocationPage = () => {
 
       <div className="loc-container">
         <h1>All Locations</h1>
-        <div className="location-list">
-          {locations.map((loc, index) => (
-            <div key={index} className="location-card">
-              <img src={loc.image} alt={loc.city} className="location-img" />
-              <div className="location-details">
-                <h3>{loc.type}</h3>
-                <p>{loc.city}</p>
-                <p>Guests: {loc.guests}</p>
-                <p>{loc.wifi ? "✅ Free WiFi" : "❌ No WiFi"}</p>
-                <p>Reviews: {loc.reviews}</p>
-                <p className="price">${loc.price} / night</p>
+
+        {loading ? (
+          <p>Loading accommodations...</p>
+        ) : (
+          <div className="location-list">
+            {listings.map((loc) => (
+              <div key={loc._id} className="location-card">
+                <img src={loc.image} alt={loc.city} className="location-img" />
+                <div className="location-details">
+                 <Link to={`/location/${loc._id}`}><h3>{loc.city}</h3></Link> 
+                  <p>{loc.type}</p>
+                  <p>Guests: {loc.guests}</p>
+                  <p>{loc.wifi ? "✅ Free WiFi" : "❌ No WiFi"}</p>
+                  <p>Reviews: {loc.reviews}</p>
+                  <p className="price">${loc.price} / night</p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
