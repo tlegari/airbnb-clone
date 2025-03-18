@@ -4,8 +4,7 @@
     justify-content: space-between;
     padding: 10px 20px;
     background-color: white; /* Change color if needed */
-    border-bottom: 1px solid #ddd;
-    height: 25vh;
+    height: 15vh;
   }
   
   .location-nav a {

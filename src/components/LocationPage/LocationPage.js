@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchListings } from "../../redux/slices/accommodationSlice";
-import SearchNavbar from "../TopHeader/SearchNavbar";
 import { Link } from "react-router-dom";
 import "./LocationPage.css";
+import Header from "../TopHeader/Header";
 
 const LocationPage = () => {
   const dispatch = useDispatch();
@@ -16,14 +16,7 @@ const LocationPage = () => {
   return (
     <div>
       <div className="loc-nav">
-        <Link to="/">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_B%C3%A9lo.svg/512px-Airbnb_Logo_B%C3%A9lo.svg.png?20230603231949"
-            alt="Airbnb logo"
-            className="login-image"
-          />
-        </Link>
-        <SearchNavbar />
+        <Header />
       </div>
 
       <div className="loc-container">

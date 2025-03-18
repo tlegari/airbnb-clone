@@ -1,0 +1,80 @@
+.create-listing-container {
+    width: 50%;
+    margin: 100px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  h2 {
+    color: #ff385c;
+  }
+  
+  .listing-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .listing-form input,
+  .listing-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .amenities-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .amenities-container input {
+    flex: 1;
+  }
+  
+  .image-upload {
+    margin-top: 10px;
+  }
+  
+  .image-upload input {
+    margin-left: 10px;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .create-btn {
+    background-color: #ff385c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .clear-btn {
+    background-color: gray;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .create-btn:hover {
+    background-color: #e12d50;
+  }
+  
+  .clear-btn:hover {
+    background-color: #555;
+  }
+  

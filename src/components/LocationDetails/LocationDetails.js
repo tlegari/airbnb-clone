@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAccommodationById } from "../../redux/slices/accommodationSlice";
+import axios from "axios";
 import "./LocationDetails.css";
 import TopHeader from "../TopHeader/TopHeader";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { FaUserCircle } from "react-icons/fa";
+import Header from "../TopHeader/Header";
+import Footer from "../Footer/Footer";
 
 const LocationDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { selectedListing: location, loading } = useSelector((state) => state.accommodation);
   console.log("Fetched location data:", location);
 
@@ -20,12 +24,39 @@ const LocationDetails = () => {
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(1);
   const [dates, setDates] = useState([null, null]);
+  const [isReserved, setIsReserved] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAccommodationById(id));
   }, [dispatch, id]);
 
   if (loading) return <p>Loading...</p>;
+
+  const handleReservation = async () => {
+    if(!checkIn || !checkOut) {
+      alert("Please select check-in and check-out dates");
+      return;
+    }
+
+    const reservationData = {
+      accommodationId: id,
+      city: location?.city,
+      type: location?.type,
+      checkInDate: checkInDate.toISOString(),
+      checkOutDate: checkOutDate.toISOString(),
+      guests,
+    };
+
+    try {
+      await axios.post("http://localhost:5000/api/reservations", reservationData);
+      setIsReserved(true);
+      alert("Reservation successful");
+    } catch (error) {
+      console.error("Error making reservation:", error);
+      alert("Failed to reserve. Try again")
+    }
+  };
+
 
   // Calculate number of nights
   const checkInDate = dates[0];
@@ -43,7 +74,7 @@ const LocationDetails = () => {
 
   return (
     <>
-      <TopHeader />
+      <Header />
       <div className="details-container">
         <h1>{location?.type} in {location?.city}</h1>
         <h2>Perfect Stay for {location?.guests} Guests</h2>
@@ -52,7 +83,7 @@ const LocationDetails = () => {
         {/* Image Gallery */}
         <div className="image-gallery">
           <div className="main-image">
-            <img src={location.image} alt={location?.city} />
+            <img src={location?.image} alt={location?.city} />
           </div>
           <div className="side-images">
             <img src="https://a0.muscache.com/im/pictures/miso/Hosting-52424984/original/22c74cb3-7625-4707-ab0b-b28dcbf3c9fc.jpeg?im_w=720" alt="1" />
@@ -62,7 +93,8 @@ const LocationDetails = () => {
           </div>
         </div>
 
-        {/* Two Column Layout */}
+        <div className="middle-container">
+          {/* Two Column Layout */}
         <div className="details-content">
           {/* Left Column */}
           <div className="accommodation-info">
@@ -91,13 +123,21 @@ const LocationDetails = () => {
             </div>
 
             <hr />
-            <h4>Total: ${location?.price * nights + 30 + 20 + 15 - 50}</h4>
-            <button className="reserve-btn">Reserve</button>
+            <h4>Total: ${location?.price * nights}</h4>
+
+            <button onClick={handleReservation} disabled={isReserved} className="reserve-btn">
+              {isReserved ? "Reserved" : "Reserve"}
+            </button>
+
+            <button className="reserve-btn" onClick={() => navigate("/my-reservations")}>
+            View My Reservations
+          </button>
           </div>
 
-          
-
         </div>
+        </div>
+
+        
 
         {/* Right Column - Booking Calendar & Cost Breakdown */}
         <div className="cost-calculator">
@@ -139,6 +179,7 @@ const LocationDetails = () => {
             </div>
           ))}
         </div>
+        <Footer />
       </div>
     </>
   );

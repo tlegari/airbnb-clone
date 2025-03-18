@@ -2,9 +2,14 @@ import express from 'express'
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import userRoutes from "./routes/userRoutes.js";
 import accommodationRoutes from "./routes/accommodationRoutes.js";
+import reservationRoutes from "./routes/reservationRoutes.js";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -20,8 +25,11 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("MongoDB connected"))
 .catch(err => console.log(err));
 
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 app.use("/api", userRoutes);
 app.use("/api/accommodations", accommodationRoutes)
+app.use("/api/reservations", reservationRoutes);
 
 
 app.get('/', (req, res) => {
